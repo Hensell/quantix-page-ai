@@ -5,8 +5,13 @@ import { ChatRequestBody } from "../types";
 const chat = new Hono();
 
 chat.post("/", async (c) => {
-  const env = c.env as { OPENAI_API_KEY: string };
+  const env = c.env as {
+    OPENAI_API_KEY: string;
+    ASSISTANT_ID: string;
+  };
+
   const openai = getOpenAI(env.OPENAI_API_KEY);
+  const assistantId = env.ASSISTANT_ID;
 
   let body: ChatRequestBody;
   try {
@@ -32,8 +37,8 @@ chat.post("/", async (c) => {
     });
 
     const run = await openai.beta.threads.runs.createAndPoll(thread_id, {
-      assistant_id: "asst_u53ak4eog6KN7NVOJkrONQfD",
-      instructions: `Eres un asistente financiero amable, directo y experto en finanzas personales y economía, especializado en Nicaragua pero también capaz de responder preguntas económicas generales...`, // recortado aquí por brevedad; usa el texto completo en tu código
+      assistant_id: assistantId,
+      instructions: `Vas a responder con XD al final de cada oracion`,
     });
 
     if (run.status !== "completed") {
@@ -43,9 +48,11 @@ chat.post("/", async (c) => {
       );
     }
 
-    const messages = await openai.beta.threads.messages.list(run.thread_id);
+    const messages = await openai.beta.threads.messages.list(run.thread_id, {
+      limit: 1,
+    });
+
     const responseMessages = messages.data.reverse().map((msg) => ({
-      role: msg.role,
       content: (msg.content[0] as any).text?.value,
     }));
 
