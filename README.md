@@ -1,7 +1,7 @@
 # Quantix AI Assistant API
 
 An open-source API built with Cloudflare Workers + OpenAI Assistant API, using TypeScript and Hono. This is version 1 of a growing project. Created on April 30, 2025.
-
+<img src="public/quantixai.png" />
 ---
 
 ## 🚀 What does this API do?
