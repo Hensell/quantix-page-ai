@@ -76,6 +76,62 @@ wrangler dev
 
 This will start your Worker at `http://localhost:8787`, where you can test your API using Postman, curl, or your frontend.
 
+## 📨 API Usage
+
+### 🔹 GET `/thread`
+
+Creates a new assistant thread.
+
+**Example request:**
+
+```http
+GET http://localhost:8787/thread
+```
+
+**Example response:**
+
+```json
+{
+  "thread_id": "thread_mKpjEzSnWnS6Id81voNxzpBI"
+}
+```
+
+---
+
+### 🔹 POST `/chat`
+
+Sends a message to the assistant and receives a response based on a thread.
+
+**Request URL:**
+
+```http
+POST http://localhost:8787/chat
+```
+
+**Request Body:**
+
+```json
+{
+  "message": "Who are you?",
+  "thread_id": "thread_mKpjEzSnWnS6Id81voNxzpBI",
+  "limit": 1
+}
+```
+
+- `message`: (string) The user message to send.
+- `thread_id`: (string) The thread ID returned by `/thread`.
+- `limit`: (optional, number) Limits how many messages are returned (default is all).
+
+**Example response:**
+
+```json
+[
+  {
+    "content": "I was built using OpenAI's Assistant API and deployed with Cloudflare Workers"
+  }
+]
+```
+
 ### 7. Deploy to Cloudflare
 
 When you're ready to go live:
