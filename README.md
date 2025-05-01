@@ -1,25 +1,111 @@
-# Cloudflare Workers OpenAPI 3.1
+# Quantix AI Assistant API
 
-This is a Cloudflare Worker with OpenAPI 3.1 using [chanfana](https://github.com/cloudflare/chanfana) and [Hono](https://github.com/honojs/hono).
+An open-source API built with Cloudflare Workers + OpenAI Assistant API, using TypeScript and Hono. This is version 1 of a growing project. Created on April 30, 2025.
 
-This is an example project made to be used as a quick start into building OpenAPI compliant Workers that generates the
-`openapi.json` schema automatically from code and validates the incoming request to the defined parameters or request body.
+---
 
-## Get started
+## 🚀 What does this API do?
 
-1. Sign up for [Cloudflare Workers](https://workers.dev). The free tier is more than enough for most use cases.
-2. Clone this project and install dependencies with `npm install`
-3. Run `wrangler login` to login to your Cloudflare account in wrangler
-4. Run `wrangler deploy` to publish the API to Cloudflare Workers
+It lets you consume a custom OpenAI Assistant from any frontend, using simple endpoints: `/thread` and `/chat`. It's designed as a base for financial bots, educational assistants, or any AI-powered project.
 
-## Project structure
+---
 
-1. Your main router is defined in `src/index.ts`.
-2. Each endpoint has its own file in `src/endpoints/`.
-3. For more information read the [chanfana documentation](https://chanfana.pages.dev/) and [Hono documentation](https://hono.dev/docs).
+## ✅ Requirements
 
-## Development
+1. A [Cloudflare](https://dash.cloudflare.com/) account.
+2. An [OpenAI](https://platform.openai.com/) account.
+3. At least $5 USD in your OpenAI billing.
+4. Node.js and npm installed locally.
 
-1. Run `wrangler dev` to start a local instance of the API.
-2. Open `http://localhost:8787/` in your browser to see the Swagger interface where you can try the endpoints.
-3. Changes made in the `src/` folder will automatically trigger the server to reload, you only need to refresh the Swagger interface.
+---
+
+## 🧱 How to set up and run this project
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/your-username/quantix-ai-assistant-api.git
+cd quantix-ai-assistant-api
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Set up Cloudflare environment
+
+- Register or log in to Cloudflare.
+- Install Wrangler CLI globally:
+
+```bash
+npm install -g wrangler
+```
+
+- If needed, authenticate Wrangler:
+
+```bash
+wrangler login
+```
+
+### 4. Create your Assistant on OpenAI
+
+- Go to [platform.openai.com](https://platform.openai.com).
+- Add billing credit.
+- Navigate to **Assistants** and create a new one.
+  - Choose any model (e.g., `gpt-3.5-turbo`).
+  - Copy the generated `assistant_id`.
+
+### 5. Add environment secrets
+
+Run the following in your terminal:
+
+```bash
+wrangler secret put OPENAI_API_KEY
+wrangler secret put ASSISTANT_ID
+```
+
+Make sure your API key and Assistant ID are correct.
+
+### 6. Run the project locally
+
+```bash
+wrangler dev
+```
+
+This will start your Worker at `http://localhost:8787`, where you can test your API using Postman, curl, or your frontend.
+
+### 7. Deploy to Cloudflare
+
+When you're ready to go live:
+
+```bash
+wrangler deploy
+```
+
+Your API will be deployed to a Cloudflare URL.
+
+---
+
+## 📁 Project structure
+
+```
+src/
+├── index.ts          # Entry point with Hono
+├── routes/
+│   ├── chat.ts       # POST /chat
+│   └── thread.ts     # GET /thread
+├── utils/
+│   └── openai.ts     # OpenAI client
+├── middlewares/
+│   └── cors.ts       # CORS headers
+├── types/
+│   └── index.ts      # Request types
+```
+
+---
+
+## 📌 License
+
+MIT © [Hensell Espinoza](https://hensell.dev)
